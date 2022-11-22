@@ -1,7 +1,8 @@
+{% extends 'welcomepage.html' %}
 {% load static %}
 <html>
     <head>
-        <link rel="stylesheet" src="{% static 'css/main.css' %}"/>
+        <link rel="stylesheet" href="{% static 'styles/register.css' %}"/>
     </head>
     <body>
         <form method="POST" action="{% url 'tenant-register' %}">

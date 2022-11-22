@@ -1,0 +1,131 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: #d68438;
+}
+.logo{
+    height:40px;
+    width:50px;
+    cursor: pointer;
+    background-color: #36846b;
+}
+header li,a {
+    background-color:  #36846b;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 580;
+    font-size: 16px;
+    color: #edf0f1;
+    text-decoration: none;
+}
+header{
+    display: flex;
+    justify-content: space-around;
+    background-color:  #36846b;
+    align-items: center;
+    padding: 10px 10%;
+    
+    -webkit-box-shadow: 3px 7px 5px 0px rgba(51,40,51,1);
+    -moz-box-shadow: 3px 7px 5px 0px rgba(51,40,51,1);
+    box-shadow: 3px 7px 5px 0px rgba(51,40,51,1);
+    height: 10vh;
+}
+nav{
+    display: flex;
+    justify-content: space-between;
+}
+.nav_links{
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+    
+}
+.nav_links li{
+    
+    
+    padding: 0 20px;
+}
+.nav_links li a{
+
+    transition: all 0.3s ease 0s;
+}
+.nav_links li a:hover{
+    color:#c79a58;
+}
+.burger{
+    display: none;
+    background-color:#36846b;
+}
+
+.burger div{
+    width: 20px;
+    height: 2px;
+    background-color:white;
+    margin: 5px;
+}
+@media screen and (max-width:768px){
+    body{
+        overflow-x: hidden;
+    }
+    .logo{
+        height:6vh;
+        width:12vw;
+        cursor: pointer;
+    }
+    .nav_links{
+        position:absolute;
+        right:0px;
+        width:40%;
+        align-items: center;
+        height: 90vh;
+        top:10vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transform: translateX(100%);
+        transition: transform 0.5s ease-in;
+        background-color: #36846b;
+    }
+    .nav_links li{
+        opacity: 0;
+        padding: 0;
+        background-color: #36846b;
+    }
+    .burger{
+        cursor: pointer;
+        display: block;
+    }
+}
+.nav_active{
+    transform: translateX(0%);
+}
+@keyframes navLinkFade {
+    from{
+        opacity:0;
+        transform: translateX(50px);
+    }
+    to{
+        opacity:1;
+        transform: translateX(0px);
+    }
+}
+.toggle .line1{
+transform: rotate(-45deg) translate(-5px,6px);
+}
+.toggle .line2{
+    opacity: 0;
+}
+.toggle .line3{
+    transform: rotate(45deg) translate(-5px,-6px);
+}
+
+.register-container{
+   background-color: #0088a9;
+   margin: 20px 20px;
+   color:aliceblue;
+}
+.register-container li{
+    list-style: none;
+}

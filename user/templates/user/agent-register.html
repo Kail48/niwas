@@ -1,14 +1,11 @@
+{% extends 'welcomepage.html' %}
 {% load static %}
-<html>
-    <head>
-        <link rel="stylesheet" src="{% static 'css/main.css' %}"/>
-    </head>
-
-    <body>
+    {% block content %}
+    <div class="register-container">
         <form method="POST" action="{% url 'agent-register' %}">
             {% csrf_token %}
             {{form.as_p}}
             <input type="submit" value="submit" />
         </form>
-    </body>
-</html>
+    </div>
+    {% endblock content %}

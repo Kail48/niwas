@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from .forms import CustomUserCreationForm
 from .models import TenantUserProfile,AgentUserProfile
 
+#After creation of a User either Agent profile or tenant profile is automatically linked
+#with that user based on what option the user chose earlier in welcome page
 
 def tenantRegister(request):
     form=CustomUserCreationForm()
@@ -43,3 +45,6 @@ def agentRegister(request):
             context={'form':form}
             return render(request,'user/tenant-register.html',context)
     return render(request,'user/agent-register.html',context)
+
+def welcomePage(request):
+    return render(request,'welcomepage.html')
