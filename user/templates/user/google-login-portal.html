@@ -1,0 +1,8 @@
+{% extends 'welcomepage.html' %}
+{% load static %}
+    {% block content %}
+{% if request.user.is_authenticated %}
+<p> logged in with google</p>
+{% endif%}
+<a href="{% url 'logout-user' %}">Log out</button>
+    {% endblock content %}

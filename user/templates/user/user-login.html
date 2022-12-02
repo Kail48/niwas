@@ -1,0 +1,56 @@
+{% extends 'welcomepage.html' %}
+{% load static %}
+{% load socialaccount %}
+    {% block content %}
+   {% for message in messages %}
+    <div class="message-box">
+      
+       <p>{{message}}</p>
+    
+    </div>
+   {% endfor %}
+    <div class="login-container">
+        <h2>Login</h2>
+        <form action="{% url 'user-login' %}"  method="POST">
+            {% csrf_token %}
+            <div class="form-content">
+               <label for="formInput#text">Username: </label>
+               <input
+                 required="required"
+                 class="input input--text"
+                 id="formInput#text"
+                 type="text"
+                 name="username"
+                 placeholder="Enter your username..."
+               />
+               <label for="formInput#password">Password: </label>
+               <input
+                 required="required"
+                 class="input input--password"
+                 id="formInput#passowrd"
+                 type="password"
+                 name="password"
+                 placeholder="••••••••"
+               />
+               <div class="btn-section">
+               <input class="submit-btn" type="submit" value="Log In" />
+               </div>
+               <a href="forgetpassword.html">Forget Password?</a>
+               
+               <p>Don't have an  account?</p>
+               <p> <a href="{% url 'tenant-register' %}">Sign up as Tenant</a>  or <a href="{% url 'agent-register' %}">Sign up as Agent</a></p>
+               <div>
+               
+               </div>
+            </div>
+           </form>
+           <a href="{% provider_login_url 'google' %}?next=/">
+            <button>
+              <div class='glogin-btn-content'>
+              <img src="{% static 'image/gicon.png' %}" />
+              <span>Login with Google</span>
+              </div>
+            </button>
+          </a>
+    </div>
+    {% endblock %}

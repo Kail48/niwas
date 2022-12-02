@@ -1,0 +1,6 @@
+{% extends 'welcomepage.html' %}
+{% load static %}
+    {% block content %}
+<p> You are logged in as: tenant</p>
+<a href="{% url 'logout-user' %}">Log out</button>
+    {% endblock content %}

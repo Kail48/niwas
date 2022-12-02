@@ -26,11 +26,12 @@ SECRET_KEY = 'django-insecure-(j3(22#9u2(wdj$4id52qc)9!56si!_!+x5r1_6nv%9x#(b@&5
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','127.0.0.1']
+ALLOWED_HOSTS = ['localhost','127.0.0.1','192.168.101.7']
 
-
+SITE_ID=1
+SOCIALACCOUNT_LOGIN_ON_GET=True
 # Application definition
-
+SOCIAL_AUTH_NEW_USER_REDIRECT_URL='google-login-portal'
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -38,7 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'user.apps.UserConfig'
+    'user.apps.UserConfig',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
 
 MIDDLEWARE = [
@@ -70,7 +76,17 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'Niwas.wsgi.application'
-
+SOCIALACCOUNT_PROVIDERS={
+    'google':{
+        'SCOPE':[
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS':{
+            'access_type':'online',
+    }
+    }
+}
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -128,7 +144,9 @@ STATICFILES_DIRS = [
      
 ]
 
-
+AUTHENTICATION_BACKENDS=[
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

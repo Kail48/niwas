@@ -1,0 +1,7 @@
+{% extends 'welcomepage.html' %}
+{% load static %}
+    {% block content %}
+<p>Welcome {{request.user.username}}</p>
+<p> You are logged in as: agent</p>
+<a href="{% url 'logout-user' %}">Log out</button>
+    {% endblock content %}

@@ -1,14 +1,20 @@
 {% extends 'welcomepage.html' %}
 {% load static %}
-<html>
-    <head>
-        <link rel="stylesheet" href="{% static 'styles/register.css' %}"/>
-    </head>
-    <body>
+    {% block content %}
+    {% for message in messages %}
+    <div class="message-box">
+      
+       <p>{{message}}</p>
+    
+    </div>
+   {% endfor %}
+    <div class="register-container">
+        <h2>Register as Tenant</h2>
         <form method="POST" action="{% url 'tenant-register' %}">
             {% csrf_token %}
             {{form.as_p}}
-            <input type="submit" value="submit" />
+            <input class="submit-btn" type="submit" value="Register" />
+            <p>Already have an account?<a href="{% url 'user-login' %}">Sign In</a></p>
         </form>
-    </body>
-</html>
+    </div>
+    {% endblock content %}
