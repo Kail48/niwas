@@ -31,7 +31,8 @@ ALLOWED_HOSTS = ['localhost','127.0.0.1','192.168.101.7']
 SITE_ID=1
 SOCIALACCOUNT_LOGIN_ON_GET=True
 # Application definition
-SOCIAL_AUTH_NEW_USER_REDIRECT_URL='google-login-portal'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/google-login-portal/'
+SOCIAL_AUTH_NEW_USER_REDIRECT_URL='/login-confirm-agent/'
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -40,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'user.apps.UserConfig',
+    'properties.apps.PropertiesConfig',
     'django.contrib.sites',
     'allauth',
     'allauth.account',

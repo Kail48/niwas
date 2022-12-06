@@ -10,126 +10,8 @@
     --ilsthl:#2b2c34;
     --ter:#e45858;
 }
-*{
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Poppins', sans-serif;
-    background-color:var(--bg);
-}
-.logo{
-    height:40px;
-    width:50px;
-    cursor: pointer;
-    background-color: var(--bg);
-}
-header li,a {
-    background-color: var(--bg);
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 580;
-    font-size: 16px;
-    font-weight: 600;
-    color:var(--hl);
-    text-decoration: none;
-}
-header{
-    display: flex;
-    justify-content: space-around;
-    background-color: var(--bg);
-    align-items: center;
-    padding: 10px 10%;
-    height: 10vh;
-}
-nav{
-    display: flex;
-    justify-content: space-between;
-}
-.nav_links{
-    list-style: none;
-    display: flex;
-    justify-content: space-around;
-    
-}
-.nav_links li{
-    padding: 0 20px;
-}
-.nav_links li a{
-    transition: all 0.3s ease 0s;
-}
-.nav_links li a:hover{
-    color:var(--ter);
-}
-.burger{
-    display: none;
-    background-color:var(--bg);
-}
 
-.burger div{
-    width: 20px;
-    height: 2px;
-    background-color:var(--ilstmain);
-    margin: 5px;
-}
-@media screen and (max-width:768px){
-    body{
-        overflow-x: hidden;
-    }
-    .logo{
-        height:6vh;
-        width:12vw;
-        cursor: pointer;
-    }
-    .nav_links{
-        z-index: 100;
-        position:absolute;
-        right:0px;
-        width:40%;
-        align-items: center;
-        height: 90vh;
-        top:10vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-evenly;
-        transform: translateX(100%);
-        transition: transform 0.5s ease-in;
-        background-color: var(--bg);
-    }
-    .nav_links li{
-        opacity: 0;
-        margin: 0;
-        padding: 0;
-        background-color: var(--bg)
-    }
-    .nav_links a{
-        font-size: 20px;
-    }
-    .burger{
-        cursor: pointer;
-        display: block;
-    }
-}
-.nav_active{
-    transform: translateX(0%);
-}
-@keyframes navLinkFade {
-    from{
-        opacity:0;
-        transform: translateX(50px);
-    }
-    to{
-        opacity:1;
-        transform: translateX(0px);
-    }
-}
-.toggle .line1{
-transform: rotate(-45deg) translate(-5px,6px);
-}
-.toggle .line2{
-    opacity: 0;
-}
-.toggle .line3{
-    transform: rotate(45deg) translate(-5px,-6px);
-}
+
 
 .register-container{
     margin: 0;
@@ -141,7 +23,7 @@ transform: rotate(-45deg) translate(-5px,6px);
    background-color: var(--ilstmain);
    position: absolute;
    left: 25vw;
-   top:20vh;
+   top:15vh;
 }
 .register-container li{
     list-style: none;

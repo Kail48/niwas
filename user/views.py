@@ -7,53 +7,69 @@ from django.contrib.auth import login,authenticate,logout
 
 #After creation of a User either Agent profile or tenant profile is automatically linked
 #with that user based on what option the user chose earlier in welcome page
+def newUserRegister(request):
+    form=CustomUserCreationForm()
+    context={'form':form}
+    if request.method=="POST":
+        form=CustomUserCreationForm(request.POST)
+        print('validating')
+        if form.is_valid():
+            user1=form.save(commit=False)
+            email=user1.email
+            existing_users=CustomUser.objects.filter(email=email)
+    
+            
+            if len(existing_users)>0:
+                form=CustomUserCreationForm()
+                context={'form':form}
+                messages.error(request,"Email already exists")
+                return render(request,'user/new-user-register.html',context)
+            else:
+                user1.username=user1.username.lower()
+                user1.save()
+                login(request,user1)
+                return redirect('google-login-portal')
+        else:
+            messages.error(request,"You did not enter in fields correctly")
+            context={'form':form}
+            return render(request,'user/new-user-register.html',context)
+    return render(request,'user/new-user-register.html',context)
+
+def createNewAgent(request):
+    user=request.user
+    AgentUserProfile.objects.create(user=user,user_name=user.username,email=user.email)
+    return render(request,'user/login-confirm-agent.html')
+
+def createNewTenant(request):
+    user=request.user
+    TenantUserProfile.objects.create(user=user,user_name=user.username,email=user.email)
+    return render(request,'user/login-confirm-tenant.html')
 
 def signupRedirect(request):
     messages.error(request,"Something did not work, Maybe you already have an account with this email?")
     return redirect('user-login')
 
 def googleLoginPortal(request):
-    return render(request,'user/google-login-portal.html')    
+    user=request.user
+    agentProfile=None
+    tenantProfile=None
+    try:
+         agentProfile=AgentUserProfile.objects.get(user=user)
+         
+    except:
+        pass
+    try:
+        tenantProfile=TenantUserProfile.objects.get(user=user)
+    except:
+        pass
+    if agentProfile is not None:
+        return render(request,'user/login-confirm-agent.html')
+    elif tenantProfile is not None:
+        return render(request,'user/login-confirm-tenant.html')
+    else:
+        return render(request,'user/google-login-portal.html') 
     
-def tenantRegister(request):
-    form=CustomUserCreationForm()
-    context={'form':form}
-    print('..........at register...........\n')
-    if request.method=="POST":
-        form=CustomUserCreationForm(request.POST)
-        print('validating')
-        if form.is_valid():
-            user1=form.save(commit=False)
-            user1.username=user1.username.lower()
-            user1.save()
-            TenantUserProfile.objects.create(user=user1,user_name=user1.username,email=user1.email)
-            print("saved")
-            return redirect('user-login')
-        else:
-            messages.error(request,"You did not enter in fields correctly")
-            context={'form':form}
-            return render(request,'user/tenant-register.html',context)
-    return render(request,'user/tenant-register.html',context)
 
-def agentRegister(request):
-    form=CustomUserCreationForm()
-    context={'form':form}
-    print('..........at register...........\n')
-    if request.method=="POST":
-        form=CustomUserCreationForm(request.POST)
-        print('validating')
-        if form.is_valid():
-            user1=form.save(commit=False)
-            user1.username=user1.username.lower()
-            user1.save()
-            AgentUserProfile.objects.create(user=user1,user_name=user1.username,email=user1.email)
-            print("saved")
-            return redirect('user-login')
-        else:
-            print('something wrong')
-            context={'form':form}
-            return render(request,'user/tenant-register.html',context)
-    return render(request,'user/agent-register.html',context)
 
 def welcomePage(request):
     return render(request,'welcomepage.html')
@@ -74,7 +90,7 @@ def userLogin(request):
             try:
                 profile=AgentUserProfile.objects.get(user=user)
             except:
-                return redirect('user/login-confirm-tenant.html')
+                return render(request,'user/login-confirm-tenant.html')
             if profile is not None:
                 return render(request,'user/login-confirm-agent.html')
             
@@ -85,6 +101,6 @@ def userLogin(request):
 
     
 def logOutUser(request):
-    print('out')
+    messages.success(request,"Successfully logged out")
     logout(request)
     return redirect('user-login')
