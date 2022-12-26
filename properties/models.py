@@ -51,6 +51,7 @@ class Property(models.Model):
     category=models.ForeignKey(Category,on_delete=models.CASCADE)
     id=models.UUIDField(default=uuid.uuid4,unique=True,primary_key=True,editable=False)
     description=models.TextField(null=True,blank=True)
+    featured_image=models.ImageField(blank=True,upload_to='image/',default='image/city.jpeg')
     created=models.DateTimeField(auto_now_add=True)
     agent=models.ForeignKey(AgentUserProfile,on_delete=models.CASCADE)
     price= models.DecimalField(max_digits=10, decimal_places=2)
@@ -75,7 +76,7 @@ class Kitchen(models.Model):
     id=models.UUIDField(default=uuid.uuid4,unique=True,primary_key=True,editable=False)
     type=models.CharField(max_length=5,choices=TYPE_CHOICES,default='SEP')
     property=models.ForeignKey(Property,on_delete=models.CASCADE,null=True)
-    image=models.ImageField(upload_to='image/',null=True)
+    image=models.ImageField(upload_to='image/',blank=True,default='image/noimage.png')
 
 class Bathroom(models.Model):
     TYPE_CHOICES=(
@@ -85,7 +86,7 @@ class Bathroom(models.Model):
     id=models.UUIDField(default=uuid.uuid4,unique=True,primary_key=True,editable=False)
     property=models.ForeignKey(Property,on_delete=models.CASCADE,null=True)
     type=models.CharField(max_length=5,choices=TYPE_CHOICES,default='SEP')
-    image=models.ImageField(null=True,blank=True,upload_to='image/',default='default.jpg')
+    image=models.ImageField(upload_to='image/',blank=True,default='image/noimage.png')
 
 class Bedroom(models.Model):
     id=models.UUIDField(default=uuid.uuid4,unique=True,primary_key=True,editable=False)
@@ -96,7 +97,7 @@ class Bedroom(models.Model):
 class BedroomImage(models.Model):
      id=models.UUIDField(default=uuid.uuid4,unique=True,primary_key=True,editable=False)
      bedroom=models.ForeignKey(Bedroom,on_delete=models.CASCADE,null=True)
-     image=models.ImageField(null=True,blank=True,upload_to='image/',default='default.jpg')
+     image=models.ImageField(upload_to='image/')
 
 class Video(models.Model):
     name= models.CharField(max_length=500)

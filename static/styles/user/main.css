@@ -71,3 +71,23 @@
 .price-container{
     display: flex;
 }
+.list-card-image{
+    width: 380px;
+    height:240px;
+}
+.showcase-image{
+    width: 1280px;
+    height:960px;
+}
+.form-field-container{
+    display:flex;
+    flex-direction: column;
+}
+.tour{
+    width: 640px;
+    height: 360px;
+}
+.carousal{
+    width: 300px;
+    height: 240px;
+}

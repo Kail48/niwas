@@ -1,33 +1,75 @@
 from django.shortcuts import render,redirect
 from django.contrib import messages
+from django.core.paginator import Paginator
 from django.http import HttpResponse
 from user.forms import CustomUserCreationForm
 from user.models import TenantUserProfile,AgentUserProfile,CustomUser
 from .forms import *
+
+def getImages(request):
+    return render(request,'properties/get-images.html')
+
+def showProperty(request,pk):
+    property=Property.objects.get(id=pk)
+    property.add_view()
+    property.save()
+    kitchen=Kitchen.objects.get(property=property)
+    bathroom=Bathroom.objects.get(property=property)
+    videoTour=VideoTour.objects.get(property=property)
+    bedroom=Bedroom.objects.get(property=property)
+   
+    images=BedroomImage.objects.filter(bedroom=bedroom)
+    context={
+        'property':property,
+        'kitchen':kitchen,
+        'bathroom':bathroom,
+        'tourAvailable':videoTour.videofile is not None,
+        'videotour':videoTour,
+        'images':images,
+    }
+    return render(request,'properties/show-property.html',context)
+
 def propertyList(request):
-    if request.method=='GET':
-        type=request.GET.get('type')
-        city=request.GET.get('city')
-        address=request.GET.get('address')
-        minPrice=request.GET.get('min-price')
-        maxPrice=request.GET.get('max-price')
-        parkingChoice=request.GET.get('parking')
-        context={
-            'type':type,
-            'city':city,
-            'address':address,
-            'min-price':minPrice,
-            'max-price':maxPrice,
-            'parling-choice':parkingChoice
-        }
-        print(context)
-        return render(request,'properties/property-list.html',context) 
+    page=request.GET.get('page')
+    city_code={
+        'Kathmandu':'KTM',
+        'Pokhara':'PK',
+        'Butwal':'BT',
+        'Birtamode':'BTM',
+        'Biratnagar':'BTG',
+        'Dharan':'DH'
+    }
+    if request.method=='POST':
+        print('at POST')
+        type=Category.objects.get(name=request.POST.get('type'))
+        city=city_code[request.POST.get('city')]
+        address=request.POST.get('address')
+        minPrice=request.POST.get('min-price')
+        maxPrice=request.POST.get('max-price')
+        try:
+            property_list=Property.objects.filter(status='OS',category=type,city=city,address__icontains=address).filter(price__range=(minPrice,maxPrice)).order_by('price')
+        except:
+            messages.error(request,'fill all the information correctly')
+            return redirect('prpperties-list')
+        if len(property_list)==0:
+            print('not found any')
+            return render(request,'properties/empty-page.html')
+        else:
+            paginator=Paginator(property_list,per_page=15)
+            page_object=paginator.get_page(page)
+            context={'properties':page_object,'total_pages':paginator.page_range}
+            return render(request,'properties/property-list.html',context) 
+
+    properties=Property.objects.filter(status='OS').order_by('price')
+    if len(properties)==0:
+        return render(request,'properties/empty-page.html')
     else:
-        context={
-            'city':'none',
-            'address':'none'
-        }  
+        paginator=Paginator(properties,per_page=15)
+        page_object=paginator.get_page(page)
+        context={'properties':page_object,'total_pages':paginator.page_range}
+        print(page)
         return render(request,'properties/property-list.html',context)
+
 def cancelPorpertyCreation(request,pk):
     temp_property=Property.objects.get(id=pk)
     temp_property.delete()
@@ -45,6 +87,7 @@ def addVideo(request,pk):
             video=form.save()
             property=Property.objects.get(id=pk)
             video.property=property
+            video.save()
             return render(request,'properties/done.html')
         else:
             messages.error(request,'Please fill the details correctly')
@@ -59,21 +102,19 @@ def addVideo(request,pk):
 
 def addImages(request,pk):
     if request.method=='POST':
-        form=BedroomImageForm(request.POST,request.FILES)
-        if form.is_valid():
-            print('Image form is valid')
-            image=form.save()
-            property=Property.objects.get(id=pk)
-            bedroom=Bedroom.objects.get(property=property)
-            image.bedroom=bedroom
-            form=BedroomImageForm()
-            context={'form':form,'property':property}
-            messages.success(request,"image added successfully")
-            return render(request,'properties/add-rooms.html',context)
-        else:
-            messages.error(request,'Please fill the details correctly')
-            context={'form':PropertyForm()}
-            return render(request,'properties/create-properties.html',context)
+        
+        print('Image form is valid')
+        property=Property.objects.get(id=pk)
+        bedroom=Bedroom.objects.get(property=property)
+        property.featured_image=request.FILES.get('imageFile')
+        property.save()
+        bedImage=BedroomImage.objects.create(bedroom=bedroom,image=request.FILES.get('imageFile'))
+        bedImage.save()
+        print('Image saved, url is '+ bedImage.image.url+" bed is is "+str(bedImage))
+        context={'property':property}
+        messages.success(request,"image added successfully")
+        return render(request,'properties/add-rooms.html',context)
+        
 
 def addRooms(request,pk):
     if request.method=='POST':
@@ -91,6 +132,7 @@ def addRooms(request,pk):
             bathroom=form.save()
             property=Property.objects.get(id=pk)
             bathroom.property=property
+            bathroom.save()
             bedroom=Bedroom.objects.create(numbers=room_number[str(property.category)],property=property)
             bedroom.save()
             form=BedroomImageForm()
@@ -109,6 +151,7 @@ def addBathroom(request,pk):
             kitchen=form.save()
             property=Property.objects.get(id=pk)
             kitchen.property=property
+            kitchen.save()
             form=BathroomForm()
             context={'property':property,'form':form}
             return render(request,'properties/add-bathroom.html',context)

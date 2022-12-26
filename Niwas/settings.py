@@ -34,6 +34,8 @@ SOCIALACCOUNT_LOGIN_ON_GET=True
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/google-login-portal/'
 SOCIAL_AUTH_NEW_USER_REDIRECT_URL='/login-confirm-agent/'
 INSTALLED_APPS = [
+    'phonenumber_field',
+    'django_cleanup.apps.CleanupConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -159,3 +161,5 @@ AUTHENTICATION_BACKENDS=[
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL="user.CustomUser"
+PHONENUMBER_DB_FORMAT="NATIONAL"
+PHONENUMBER_DEFAULT_REGION="NP"

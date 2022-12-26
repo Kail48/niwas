@@ -1,0 +1,16 @@
+{% extends 'welcomepage.html' %}
+{% load static %}
+{% block title %}No properties to show{% endblock%}
+{% block content %}
+<div class="column is-three-fifths is-offset-one-fifth mt-6">
+    <div class="column card-container-div">
+        <div class="content-div">
+            <h4 class="subtitle is-4">Oops!! <br>There is nothing to show!!</h4>
+            <a href="{% url 'properties-list' %}"><button class="button is-light">Go to Home</button></a>
+        </div>
+        <img class="success-image" src="{% static 'image/empty.jpeg' %}" height='600' width='400'>
+        
+    </div>
+</div>
+    
+{% endblock %}

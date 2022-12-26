@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from phonenumber_field.modelfields import PhoneNumberField
 import uuid
 # Create your models here.
 
@@ -11,6 +12,7 @@ class AgentUserProfile(models.Model):
      user=models.OneToOneField(CustomUser,on_delete=models.CASCADE,null=True,blank=True)
      name=models.CharField(max_length=200,blank=True,null=True)
      user_name=models.CharField(max_length=200,blank=True,null=True)
+     phone_number = PhoneNumberField(blank=True)
      email=models.EmailField(max_length=500,blank=True,null=True)
      created=models.DateTimeField(auto_now_add=True)
      id=models.UUIDField(default=uuid.uuid4,unique=True,primary_key=True,editable=False)
@@ -23,6 +25,7 @@ class TenantUserProfile(models.Model):
     user=models.OneToOneField(CustomUser,on_delete=models.CASCADE,null=True,blank=True)
     name=models.CharField(max_length=200,blank=True,null=True)
     user_name=models.CharField(max_length=200,blank=True,null=True)
+    phone_number = PhoneNumberField(blank=True)
     email=models.EmailField(max_length=500,blank=True,null=True)
     created=models.DateTimeField(auto_now_add=True)
     id=models.UUIDField(default=uuid.uuid4,unique=True,primary_key=True,editable=False)

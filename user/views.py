@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.http import HttpResponse
 from .forms import CustomUserCreationForm
+from properties.models import Property
 from .models import TenantUserProfile,AgentUserProfile,CustomUser
 from django.contrib.auth import login,authenticate,logout
 
@@ -72,6 +73,7 @@ def googleLoginPortal(request):
 
 
 def welcomePage(request):
+    return redirect('properties-list')
     return render(request,'welcomepage.html')
 
 def userLogin(request):
