@@ -1,0 +1,134 @@
+{% extends 'welcomepage.html' %}
+{% load static %}
+{% block title %}Select profile type{% endblock %}
+    {% block content %}
+    <section class="hero is-success is-halfheight">
+        <div class="hero-body">
+            
+          <div class="">
+            <p class="title">
+              Welcome {{request.user.username}},
+            </p>
+            <p class="subtitle">
+              Find your dream place as a Tenant or rent out properties as an Agent!<br>
+              Choose your account type
+            </p>
+          </div>
+         
+        </div>
+     
+            </div>
+      </section>
+      <div class="container">
+        <div class="columns">
+            <div class="column">
+              <div class="ui card">
+                <div class="content">
+                
+                </div>
+                <div class="content">
+                  <h4 class="ui sub header">Tenant</h4>
+                  <div class="ui small feed">
+                    <div class="event">
+                      <div class="content">
+                        <div class="summary">
+                          Search for the type of place you are Looking for,<br>
+                          Book appointments to view the place
+                        </div>
+                      </div>
+                    </div>
+                    
+                  </div>
+                </div>
+                <div class="extra content">
+                  <button class="ui button is-black js-modal-trigger" data-target="modal-js-tenant">Join as Tenant</button>
+                </div>
+              </div>
+            </div>
+            <div class="column">
+              <div class="ui card">
+                <div class="content">
+                
+                </div>
+                <div class="content">
+                  <h4 class="ui sub header">Agent</h4>
+                  <div class="ui small feed">
+                    <div class="event">
+                      <div class="content">
+                        <div class="summary">
+                           Post your properties for everyone to see,<br>
+                            Receive appointments from interested tenants
+                        </div>
+                      </div>
+                    </div>
+                    
+                  </div>
+                </div>
+                <div class="extra content">
+                  <button class="ui button is-dark js-modal-trigger" data-target="modal-js-agent">Join as Agent</button>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div id="modal-js-agent" class="modal">
+        <div class="modal-background"></div>
+      
+        <div class="modal-content">
+          <div class="box">
+            <div class="card">
+              <div class="content">        
+                <div class="header">
+                  Are you Sure?
+                </div>
+                <div class="meta">
+                  
+                </div>
+                <div class="description">
+                  You will create an account as an agent.<br>
+                  
+                </div>
+              </div>
+              <div class="extra content">
+                <div class="ui two buttons">
+                  <a href="{% url 'create-new-agent' %}"><div class="ui button is-success">Confirm</div></a>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+        <button class="modal-close is-large" aria-label="close"></button>
+      </div>
+      <div id="modal-js-tenant" class="modal">
+        <div class="modal-background"></div>
+      
+        <div class="modal-content">
+          <div class="box">
+            <div class="card">
+              <div class="content">        
+                <div class="header">
+                  Are you Sure?
+                </div>
+                <div class="meta">
+                  
+                </div>
+                <div class="description">
+                  You will create an account as a tenant.<br>
+                  
+                </div>
+              </div>
+              <div class="extra content">
+                <div class="ui two buttons">
+                  <a href="{% url 'create-new-tenant' %}"><div class="ui button is-success">Confirm</div></a>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+        <button class="modal-close is-large" aria-label="close"></button>
+      </div>
+    {% endblock content %}

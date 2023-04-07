@@ -1,0 +1,22 @@
+{% extends 'welcomepage.html' %}
+{% load static %}
+    {% block content %}
+    {% for message in messages %}
+    <div class="message-box">
+      
+       <p>{{message}}</p>
+    
+    </div>
+   {% endfor %}
+    <div class="register-container">
+        <h2>Register as Agent</h2>
+        <form method="POST" action="{% url 'agent-register' %}">
+            {% csrf_token %}
+            {{form.as_p}}
+          
+            <input class="submit-btn" type="submit" value="Register" />
+            
+            <p class="sign-in">Already have an account?<a href="{% url 'user-login' %}">Sign In</a></p>
+        </form>
+    </div>
+    {% endblock content %}

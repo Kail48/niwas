@@ -1,0 +1,46 @@
+{% extends 'welcomepage.html' %}
+{% load static %}
+{% load socialaccount %}
+{% block title %}Login to Niwas{% endblock %}
+{% block content %}
+    <div class="container my-6 ml-10">
+      <h1 class="title">Sign in</h1>
+     
+      <div class="columns">
+          <div class="column is-5">
+              <div class="columns is-flex is-flex-direction-column">
+                  <div class="column">
+                    <form action="{% url 'user-login' %}"  method="POST">
+                      {% csrf_token %}
+                      <label for="username">Username</label>
+                      <input class="input is-primary" type="text" name="username" placeholder="Username">
+                  </div>
+                  <div class="column">
+                      <label for="password">Password</label>
+                      <input class="input is-primary" type="password" name="password" placeholder="Password">
+                      <a href="forget.html" class="is-size-7 has-text-primary">forget password?</a>
+                  </div>
+                  <div class="column">
+                      <button class="button is-primary is-fullwidth" type="submit" value="Log In">Login</button>
+                    </div>
+                </form>
+                <div class="column">
+                  <a href="{% provider_login_url 'google' %}?next=/google-login-portal"><button class="button is-secondary is-fullwidth">
+                    <figure class="image image is-24x24">
+                      <img src="{% static "image/google.png" %}">
+                    </figure>
+                      <span>Login with Google</span></button></a>
+                </div>
+                  <div class="has-text-centered">
+                    
+                      <p class="is-size-7"> Don't have an account? <a href="{% url 'new-user-register' %}" class="has-text-primary">Sign up</a> 
+                      </p>
+                  </div>
+              </div>
+          </div>
+          <div class="column is-6">
+              <img src="{% static 'image/loginimage.jpg' %}" alt="bulma login page">
+          </div>
+      </div>
+    </div>
+{% endblock %}

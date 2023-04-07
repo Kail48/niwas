@@ -1,0 +1,127 @@
+{% extends 'welcomepage.html' %}
+{% load static %}
+{% block title %}Bookings{% endblock%}
+{% block content %}
+<br>
+<section class="hero is-small is-primary mt-5">
+    <div class="hero-body">
+      <p class="title has-text-centered">
+        My Bookings
+      </p>
+
+    </div>
+  </section>
+<div class="column is-full mt-2">
+    <div class="tile is-ancestor">
+        <div class="tile is-4 is-vertical is-parent">
+          <div class="tile is-child box">
+            <p class="title">Stats</p>
+            <div class="ui statistics">
+                <div class="statistic">
+                  <div class="value">
+                    {{totalProperties}}
+                  </div>
+                  <div class="label">
+                    Properties
+                  </div>
+                </div>
+                <div class="statistic">
+                  <div class="value">
+                    {{totalBookings}}
+                  </div>
+                  <div class="label">
+                    Bookings
+                  </div>
+                </div>
+                <div class="statistic">
+                  <div class="value">
+                    {{totalViews}}
+                  </div>
+                  <div class="label">
+                    Total views
+                  </div>
+                </div>
+                <div class="statistic">
+                    <div class="value">
+                      {{bookRatio}}
+                    </div>
+                    <div class="label">
+                      views for every new Booking
+                    </div>
+                  </div>
+              </div>
+          </div>
+          <div class="tile is-child box ">
+            <p class="title">All bookings</p>
+            <div class="all-booking-wrapper">
+            <table class="ui selectable inverted table ">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Property</th>
+                    <th class="right aligned">Number</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for booking in allBookings %}
+                  <tr>
+                    <td>{{booking.tenant.name}}</td>
+                    <td>{{booking.property.title}}</td>
+                    <td class="right aligned">{{booking.tenant.phone_number}}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="tile is-parent">
+          <div class="tile is-child box">
+            <p class="title">Booking per Property</p>
+            {% for key,booking in bookings.items %}
+            <div class="box">
+                <div class="columns">
+                    <div class="column">
+                        {{key|capfirst}}
+                    </div>
+                    <div class="column">
+                        <div class="ui label">
+                            <i class="map marker icon"></i>  {{booking.0.property.address}}
+                          </div>
+                       
+                    </div>
+                    <div class="column">
+                        <div class="ui label">
+                            <i class="eye icon"></i>  {{booking.0.property.views}}
+                          </div>
+                        
+                    </div>
+                </div> 
+                <div class="ui divider"></div>
+                
+                <div class="booking-wrapper">
+                    <table class="ui selectable inverted table ">
+                        <thead>
+                          <tr>
+                            <th>Name</th>
+                            <th>Date</th>
+                            <th class="right aligned">contact</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            {% for book in booking %}
+                          <tr>
+                            <td>{{book.tenant.name}}</td>
+                            <td>{{book.created}}</td>
+                            <td class="right aligned">{{book.tenant.phone_number}}</td>
+                          </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+              </div>
+            {% endfor %}
+      </div>
+    </div>
+</div>
+{% endblock %}

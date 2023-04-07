@@ -1,0 +1,78 @@
+{% extends 'welcomepage.html' %}
+{% load static %}
+{% block title %}No properties to show{% endblock%}
+{% block content %}
+<section class="hero is-small has-background-dark  pr-3 pl-2 pb-2 mt-6">
+    <div class="hero-body">
+      <p class="title has-text-white">
+        Time to add details to rooms and add images
+      </p>
+      <p class="subtitle has-text-white">
+        Try putting attractive images for getting more response
+      </p>
+    </div>
+   
+  </section>
+  <div class="column is-half is-offset-one-quarter mt-3 ">
+    <form method="POST" action="" enctype='multipart/form-data'>
+        {% csrf_token %}
+        <div class='box form-field-container'>
+            <h3 class="title is-3 has-text-centered">Kitchen</h3>
+            <div class="field">
+                <label class="label mb-2">Type</label>
+                <div class="select is-primary">
+                    <select>
+                        <option>Not Available</option>
+                        <option>Separated</option>
+                        <option>Attached</option>
+                    </select>
+                  </div>   
+            </div>
+            <div class="file is-normal">
+                <label class="file-label">
+                  <input class="file-input" type="file" name="resume">
+                  <span class="file-cta">
+                    <span class="file-icon">
+                      <i class="fas fa-upload"></i>
+                    </span>
+                    <span class="file-label">
+                      Choose Image
+                    </span>
+                  </span>
+                </label>
+              </div>
+        </div>
+
+        <div class='box form-field-container'>
+            <h3 class="title is-3 has-text-centered">Bathroom</h3>
+            <div class="field">
+                <label class="label mb-2">Type</label>
+                <div class="select is-primary">
+                    <select>
+
+                      <option>Separated</option>
+                      <option>Shared</option>
+                    </select>
+                  </div>   
+            </div>
+            <div class="file is-normal">
+                <label class="file-label">
+                  <input class="file-input" type="file" name="resume">
+                  <span class="file-cta">
+                    <span class="file-icon">
+                      <i class="fas fa-upload"></i>
+                    </span>
+                    <span class="file-label">
+                      Choose Image
+                    </span>
+                  </span>
+                </label>
+              </div>
+        </div>
+        <div class='box form-field-container'>
+            <h3 class="title is-3 has-text-centered">Add more Images</h3>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

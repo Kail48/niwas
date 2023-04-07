@@ -1,0 +1,186 @@
+{% extends 'welcomepage.html' %}
+{% load static %}
+{% block title %}Show property{% endblock%}
+{% block content %}
+<div class="column is-full mt-6 ">
+    <h2 class="title is-2 has-text-centered mb-6">{{property.title|capfirst}}</h2>
+    
+    <div class="columns mt-6">
+        <div class="column is-one-fifths ml-3 ">
+            <img class="ui fluid image" src="{{property.featured_image.url}}">
+        </div>
+     
+        <div class="column is-two-fifths has-text-centered mr-3 ">
+           <h4 class="subtitle is-4 has-text-justified is-italic">{{property.description}}</h4>
+        </div>
+       
+      </div>
+
+</div>
+<div class="ui divider"></div>
+<div class="column is-full mt-2 ">
+    <h4 class="title is-4 has-text-centered">Details</h4>
+    <div class="columns  pt-4 pl-4 pr-4 has-text-centered">
+        <div class="column">
+            <div class="ui tiny statistic">
+                <div class="label">
+                  Type
+                </div>
+                <div class="value">
+                  {{property.category.name}}
+                </div>
+              </div>
+          </div>
+          <div class="column">
+            <div class="ui tiny violet statistic">
+                <div class="label">
+                  Price
+                </div>
+                <div class="value">
+                    <i class="money bill alternate outline icon"></i> {{property.price}}
+                </div>
+              </div>
+          </div>
+          
+            <div class="column">
+              
+                  <div class="ui tiny statistic">
+                    <div class="label">
+                      City
+                    </div>
+                    <div class="value">
+                        <i class="building icon"></i> {{property.get_city_display}}
+                    </div>
+                  </div>
+              </div>
+              </div>
+    </div>
+    <div class="column is-full has-text-centered">
+        <div class="ui tiny  statistic">
+            <div class="label">
+              Address
+            </div>
+            <div class="value">
+                <i class="map marker icon"></i> {{property.address}}
+            </div>
+          </div>
+      <div class="ui divider"></div>
+      <div class="column is-full mt-2 ">
+        <h4 class="title is-4 has-text-centered">Kitchen</h4>
+        <div class="column is-three-fifths is-offset-one-fifth">
+          {% if kitchen.image %}
+          <img class="ui fluid image" src="{{kitchen.image.url}}">
+          {% endif %}
+          <div class="column has-text-centered">
+            <div class="ui tiny statistic">
+                <div class="label">
+                  Type
+                </div>
+                <div class="value">
+                  
+                  {{kitchen.get_type_display}}
+                  
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="ui divider"></div>
+      <div class="column is-full mt-2 ">
+        <h4 class="title is-4 has-text-centered">Bathroom</h4>
+        <div class="column is-three-fifths is-offset-one-fifth">
+          
+          <img class="ui fluid image" src="{{bathroom.image.url}}">
+
+          <div class="column has-text-centered">
+            <div class="ui tiny statistic">
+                <div class="label">
+                  Type
+                </div>
+                <div class="value">
+                  
+                  {{bathroom.get_type_display}}
+                  
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="ui divider"></div>
+      <div class="column is-full mt-2 ">
+        <h4 class="title is-4 has-text-centered">Water and Parking</h4>
+        <div class="columns mt-6">
+          <div class="column">
+            <div class="ui tiny statistic">
+              <div class="label">
+                Water
+              </div>
+              <div class="value">
+                
+                {{property.get_water_display}}
+                
+              </div>
+            </div>
+          </div>
+          
+          <div class="column">
+            <div class="ui tiny statistic">
+              <div class="label">
+                Parking
+              </div>
+              <div class="value">
+                
+                {{property.get_parking_display}}
+                
+              </div>
+            </div>
+          </div>
+         
+        </div>
+      </div>
+      <div class="ui divider"></div>
+      <div class="column is-full mt-2 ">
+        <h4 class="title is-4 has-text-centered">Images</h4>
+        <div class="ui tiny images">
+         {% for image in images %}
+         <img class="ui image js-modal-trigger carousal" src="{{image.image.url}}" data-target="{{image.image.url}}">
+         {% endfor %} 
+        </div>
+         {% for image in images %}
+         <div id="{{image.image.url}}" class="modal">
+          <div class="modal-background"></div>
+          <div class="modal-content">
+            <p class="image is-4by3">
+              <img src="{{image.image.url}}" alt="">
+            </p>
+          </div>
+          <button class="modal-close is-large" aria-label="close"></button>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="ui divider"></div>
+      {% if tourAvailable %}
+      <div class="column is-full mt-2 ">
+        <h4 class="title is-4 has-text-centered">Take a video Tour</h4>
+        <div class="column is-three-fifths is-offset-one-fifth">
+          <div class="box has-background-black">
+            <video class="tour" controls>
+              <source src="{{ videotour.videofile.url }}"  type="video/mp4">
+            </video>
+          </div>
+          
+      </div>
+      </div>
+      {%  endif %}
+      <div class="ui divider"></div>
+      {% if user.type == 'T' and isBookmarked != True %}
+      <a href="{% url 'book-property' property.id %}"><div class="ui animated fade button massive red" tabindex="0">
+        <div class="visible content">Request for appointment</div>
+        <div class="hidden content">
+        Charges Apply
+        </div>
+      </div></a>
+      {% endif %}
+  </div>
+    
+{% endblock %}

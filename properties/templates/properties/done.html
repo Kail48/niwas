@@ -1,0 +1,16 @@
+{% extends 'welcomepage.html' %}
+{% load static %}
+{% block title %}New property added{% endblock%}
+{% block content %}
+<div class="column is-three-fifths is-offset-one-fifth mt-6">
+    <div class="column card-container-div">
+        <div class="content-div">
+            <h4 class="subtitle is-4">New Property added <br>Happy dealing!!</h4>
+            <a href="{% url 'welcome-page' %}"><button class="button is-light">Go to Home</button></a>
+        </div>
+        <img class="success-image" src="{% static 'image/success.jpeg' %}" height='600' width='400'>
+        
+    </div>
+</div>
+    
+{% endblock %}

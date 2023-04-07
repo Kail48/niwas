@@ -1,0 +1,134 @@
+{% extends 'welcomepage.html' %}
+{% load static %}
+{% block title %}List of properties{% endblock%}
+{% block content %}
+<br>
+
+<div class="column is-full has-background-dark mt-5">
+    <button class="button is-warning js-modal-trigger " data-target="modal-js-filter">
+        Customize your search
+      </button>
+   
+</div>
+
+<div class="columns is-multiline is-1-mobile p-4 m-4 has-background-light">
+  {% for property in properties %}
+  <div class="column is-one-third mt-3">
+    <div class="ui card container is-centered has-shadow">
+  
+        <img class="list-card-image" src="{{property.featured_image.url}}">
+
+      
+      <div class="content">
+        <div class="meta">
+          <span class="right floated">
+            <i class="circle icon"></i>
+              {{property.category.name}}
+          </span>
+          <div class="ui red label">
+            <i class="money bill alternate icon"></i> {{property.price}}
+          </div>
+        </div>
+        <a class="header mt-2 mb-2" href="{% url 'show-property' property.id %}">{{property.title|truncatechars:25}}</a>
+      <span class="">
+        <i class="map marker icon"></i>
+          {{property.address|capfirst}}
+      </span>
+      
+
+    </div>
+      <div class="content">
+        <span class="right floated">
+          <i class="bookmark icon"></i>
+          {{property.reservations}} Booking{{property.reservations|pluralize}}
+        </span>
+       
+        <i class="eye icon"></i>
+          {{property.views}} view{{property.views|pluralize}}
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+  <div class="column is-full mt-2">
+  <nav class="pagination is-rounded is-centered" role="navigation" aria-label="pagination">
+    {% if properties.has_previous %}
+    <a class="pagination-previous" href="?page={{properties.previous_page_number}}">Previous</a>
+    {% endif %}
+    {% if properties.has_next %}
+      <a class="pagination-next" href="?page={{properties.next_page_number}}">Next page</a>
+    {% endif %}
+    
+    <ul class="pagination-list">
+      {% for page_number in total_pages %}
+      
+      {% if page_number == properties.number %}
+        <li><a class="pagination-link is-current" aria-label="Page 46" aria-current="page">{{page_number}}</a></li>
+      {% else %}
+        <li><a class="pagination-link" aria-label="Goto page 1" href="?page={{page_number}}">{{page_number}}</a></li>
+      {% endif %}
+      
+      
+      {% endfor %}
+    </ul>
+  </nav>
+</div>
+</div>
+
+<div id="modal-js-filter" class="modal">
+    <div class="modal-background"></div>
+  
+    <div class="modal-content">
+        
+      <div class="box">
+        <h4 class="title is-4">What kind of place are you looking for?</h4>
+        <form class="filter-container" method="POST" action="{% url 'properties-list' %}">
+          {% csrf_token %}
+            <div class="field">
+                <label class="label">Type</label>
+                <div class="select is-primary">
+                    <select name="type">
+                      <option>SR</option>
+                      <option>DR</option>
+                      <option>1BHK</option>
+                      <option>2BHK</option>
+                      <option>3BHK</option>
+                      <option>4BHK</option>
+                    </select>
+                  </div>
+            </div>
+            <div class="field">
+                <label class="label">City</label>
+                <div class="select is-primary">
+                    <select name="city">
+                      <option>Kathmandu</option>
+                      <option>Pokhara</option>
+                      <option>Butwal</option>
+                      <option>Birtamode</option>
+                      <option>Biratnagar</option>
+                      <option>Dharan</option>
+                    </select>
+                  </div>
+            </div>
+            <div class="field">
+                <label class="label">Address</label>
+                <div class="control">
+                  <input class="input is-success" type="text" name="address">
+                </div>
+              </div>
+              <div class="field">
+                <label class="label">Price range</label>
+                <div class="control">
+                    <input class="input is-success" type="number" name="min-price" min='0' >
+                    To
+                    <input class="input is-success" type="number" name="max-price" min='0' >
+                </div>
+              </div>
+            
+            <button type="submit" class="button is-medium is-fullwidth has-background-black has-text-white ">Apply filter</button>
+        </form>
+      </div>
+    </div>
+  
+    <button class="modal-close is-large" aria-label="close"></button>
+  </div> 
+{% endblock %}

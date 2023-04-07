@@ -1,0 +1,106 @@
+.radio-wrapper{
+    display: flex;
+    justify-content: left;
+    gap:20px;
+    
+}
+
+.radio-wrapper label{
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+    position: relative;
+    color: black;
+    border: 2px solid black;
+    border-radius: 4px;
+    padding: 5px 5px;
+}
+
+.radio-wrapper input[type='radio']:checked + label{
+    background-color: black;
+    color: white;
+}
+
+.radio-wrapper .radio-choice{
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
+    border: 2px solid #444;
+    border-radius: 50%;
+    accent-color: black;
+}
+.water-field-container{
+    background-image: url('/static/image/water.jpeg');
+    background-position: bottom;
+    background-repeat:  no-repeat;
+    background-attachment: scroll;
+    background-size:  cover;
+    background-color: #999;
+}
+.parking-field-container{
+    background-image: url('/static/image/parking.jpeg');
+    background-position: right;
+    background-repeat:  no-repeat;
+    background-attachment: scroll;
+    background-size:  contain;
+    background-color: #999;
+}
+.city-field-container{
+    background-image: url('/static/image/city.jpeg');
+    background-position: right;
+    background-repeat:  no-repeat;
+    background-attachment: scroll;
+    background-size:  cover;
+    background-color: #999;
+}
+.address-field-container{
+    background-image: url('/static/image/address.jpeg');
+    background-position: right;
+    background-repeat:  no-repeat;
+    background-attachment: scroll;
+    background-size:  contain;
+    background-color: #999;
+}
+.content-div{
+    text-align: center;
+    padding: 10px;
+}
+.card-container-div{
+    text-align: center;
+}
+.price-container{
+    display: flex;
+}
+.list-card-image{
+    width: 380px;
+    height:240px;
+}
+.showcase-image{
+    width: 1280px;
+    height:960px;
+}
+.form-field-container{
+    display:flex;
+    flex-direction: column;
+}
+.tour{
+    width: 640px;
+    height: 360px;
+}
+.carousal{
+    width: 300px;
+    height: 240px;
+}
+.list-wrapper-div{
+    height:40vh;
+    overflow-y: scroll;
+}
+.all-booking-wrapper{
+    height:40vh;
+    overflow-y: scroll;
+}
+.button-pack{
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+}

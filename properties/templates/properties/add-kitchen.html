@@ -1,0 +1,59 @@
+{% extends 'welcomepage.html' %}
+{% load static %}
+{% block title %}Add Kitcken details{% endblock %}
+{% block content %}
+<section class="hero is-small has-background-dark  pr-3 pl-2 pb-2 mt-5">
+    <div class="hero-body">
+      <p class="title has-text-white">
+        Add details to kitchen
+      </p>
+      <p class="subtitle has-text-white">
+        This might be a deal breaker
+      </p>
+    </div>
+    <progress class="progress is-primary" value="40" max="100">15%</progress>
+  </section>
+<div class="column is-half is-offset-one-quarter mt-3 ">
+    <form method="POST" action="{% url 'add-bathroom' property.id %}" enctype='multipart/form-data'>
+        {% csrf_token %}
+        <div class='box type-field-container'>
+            <div class="field">
+                <label class="label">Type</label>
+                <div class="radio-wrapper">
+                {% for radio in form.type %}
+                {{radio}}
+                {% endfor %}
+                </div>             
+            </div>
+        </div>
+
+        <div class='box type-field-container'>
+            <div class="field">
+                <h3 class="subtitle is-3">Now choose an Image for the Kitchen</h3>
+                <h6 class="subtitle is-6">Make sure the angle is good, and the Image is clean</h6>
+                <div class="file is-info has-name">
+                    <label class="file-label">
+                      {{form.image}}
+                      <span class="file-cta">
+                        <span class="file-icon">
+                          <i class="fas fa-upload"></i>
+                        </span>
+                        <span class="file-label">
+                          Choose an Image
+                        </span>
+                      </span>
+                      <span class="file-name">
+                        
+                      </span>
+                    </label>
+                  </div> 
+            </div>
+        </div>
+        
+          <button type="submit" class="button is-black">Next</button>
+          
+        
+      </form>
+      <a href="{% url 'cancel-property-creation' property.id %}"><button class="button is-danger mt-2">Cancel</button></a>
+</div>
+{% endblock %}

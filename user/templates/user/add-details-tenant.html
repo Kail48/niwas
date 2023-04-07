@@ -1,0 +1,40 @@
+{% extends 'welcomepage.html' %}
+{% load static %}
+{% block title %}Add information{% endblock%}
+{% block content %}
+<br>
+
+<div class="column is-full mt-5">
+    <div class="column  is-three-fifths is-offset-one-fifth mt-6">
+        <h3 class="title is-3 has-text-centered">Make it easier to reach you</h3>
+        <form action="{% url 'complete-tenant-profile' tenant.id %}" method="POST">
+            {% csrf_token %}
+            <div class="field mt-5 mb-5">
+                <label class="label">Name</label>
+                <div class="control has-icons-left has-icons-right">
+                  <input class="input is-success" type="text" placeholder="Text input" value="" name="name">
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-user"></i>
+                  </span>
+                 
+                </div>
+                
+              </div>
+
+              <div class="field mt-5 mb-5">
+                <label class="label">Phone number</label>
+                <div class="control has-icons-left has-icons-right">
+                  <input class="input is-success" type="text" placeholder="Text input" name="number"  value="Ex: +9779812345678">
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-mobile"></i>
+                  </span>
+           
+                </div>
+                
+              </div>
+              <button type="submit" class="button is-info mt-3 mb-5">Continue</button>
+        </form>
+    </div>
+   
+</div>
+{% endblock %}

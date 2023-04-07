@@ -1,0 +1,75 @@
+{% extends 'welcomepage.html' %}
+{% load static %}
+{% block title %}{{profile.name|capfirst}} profile{% endblock%}
+{% block content %}
+<br>
+
+<div class="column is-full mt-5">
+      <div class="columns">
+      <div class="column is-one-fifth">
+            <div class="ui olive card">
+                  <div class="content">
+                    <div class="right floated meta">Agent</div>
+                    {{profile.name|upper}}
+                  </div>
+                  <div class="image">
+                    <img src="{{profile.profile_picture.url}}">
+                  </div>
+                  <div class="content">
+                    <i class="mobile icon"></i>
+                      {{profile.phone_number}}
+                    <i class="edit icon"></i>
+                  <div class="ui divider"></div>
+                    <i class="envelope icon"></i>
+                    {{profile.email}}
+                    <i class="edit icon"></i>
+                  </div>
+            </div>
+      </div>
+      <div class="column is-four-fifths">
+            <h2 class="title is-2 has-text-centered">My properties</h2>
+            <div class="container bookings-container">
+                  {% if isEmpty %}
+                  <div class="column card-container-div">
+                        <div class="content-div">
+                            <h4 class="subtitle is-4">Oops!! <br>There is nothing to show!!</h4>
+                            <a href="{% url 'create-property' %}"><button class="button is-light">Create one Now</button></a>
+                        </div>
+                        <img class="success-image" src="{% static 'image/empty.jpeg' %}" height='600' width='400'>
+                        
+                    </div>
+                  {% else %}
+                  <div class="ui cards">
+                    {% for property in properties %}
+                    <div class="card">
+                      <div class="content">
+                        <a href="{% url 'show-property' property.id %}"><div class="header">{{property.title}}</div></a>
+                        <div class="description">
+                          {{property.address}}
+                        </div>
+                      </div>
+                      <div class="ui bottom attached button js-modal-trigger" data-target="modal-delete-property">
+                        <i class="trash icon "></i>
+                        Delete
+                      </div>
+                    </div>
+                    <div id="modal-delete-property" class="modal">
+                      <div class="modal-background"></div>
+                            <div class="modal-content">
+                                  <div class="box">
+                                  <p>Are you sure you want to delete this property?</p>
+                                  <a href="{% url 'delete-property' property.id %}"><button class="ui inverted green button mt-2 mb-2">Yes</button></a>
+                                  <p>Click outside the modal to cancel</p>
+                                  </div>
+                            </div>
+                            <button class="modal-close is-large" aria-label="close"></button>
+                    </div>
+           
+                   {% endfor %}
+                  </div>
+                  {% endif%}
+            </div>
+      </div>
+</div> 
+</div>
+{% endblock %}

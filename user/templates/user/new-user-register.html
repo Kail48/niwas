@@ -1,0 +1,53 @@
+{% extends 'welcomepage.html' %}
+{% load static %}
+{% block title %}Select User Type{% endblock %}
+{% block content %}
+   
+    <div class="column is-half is-offset-one-quarter mt-6">
+        <h1 class="title">Create a new account</h1>
+        <form method="POST" action="{% url 'new-user-register' %}">
+            {% csrf_token %}
+            <div class="field mt-2">
+                <label class="label">Username</label>
+                <div class="control has-icons-left">
+                    {{form.username}}
+                  <span class="icon is-small is-left">
+                    <i class="fas fa-user"></i>
+                  </span>
+                  {{form.username.errors}}
+            </div>
+            <div class="field mt-3">
+                    <label class="label">Email</label>
+                    <div class="control has-icons-left">
+                        {{form.email}}
+                      <span class="icon is-small is-left">
+                        <i class="fas fa-envelope"></i>
+                      </span>
+                      {{form.email.errors}}
+            </div>     
+            <div class="field mt-3">
+                        <label class="label">Password</label>
+                        <div class="control has-icons-left">
+                            {{form.password1}}
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-lock"></i>
+                              </span>
+                              {{form.password1.errors}}
+            </div>             
+            <div class="field mt-3">
+                    <label class="label">Confirm Password</label>
+                    <div class="control has-icons-left">
+                        {{form.password2}}
+                        <span class="icon is-small is-left">
+                            <i class="fas fa-lock"></i>
+                        </span>
+                        {{form.password2.errors}}
+                    </div>
+            </div>
+          
+                <button type="submit" class="button is-info mt-3">Sign up</button>
+        </form>
+        <p class="sign-in mt-2">Already have an account?<a href="{% url 'user-login' %}">Sign In</a></p>
+    </div
+    
+{% endblock %}  

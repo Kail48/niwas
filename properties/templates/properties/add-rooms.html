@@ -1,0 +1,47 @@
+{% extends 'welcomepage.html' %}
+{% load static %}
+{% block title %}Add rooms to property{% endblock %}
+{% block content %}
+
+<section class="hero is-small has-background-dark  pr-3 pl-2 pb-2 mt-5">
+    <div class="hero-body">
+      <p class="title has-text-white">
+        Time to upload Images for other rooms
+      </p>
+      <p class="subtitle has-text-white">
+        This is important as well
+      </p>
+    </div>
+    <progress class="progress is-primary" value="80" max="100">15%</progress>
+  </section>
+<div class="column is-half is-offset-one-quarter mt-3 ">
+    <form method="POST" action="{% url 'add-images' property.id %}" enctype='multipart/form-data'>
+        {% csrf_token %}
+
+        <div class='box type-field-container'>
+            <div class="field">
+                <h3 class="subtitle is-3">Now choose an Image for the Bedroom/rooms</h3>
+                <h6 class="subtitle is-6">Make sure the angle is good, and the Image is clean</h6>
+                <div class="file is-normal">
+                  <label class="file-label">
+                    <input class="file-input" type="file" name="imageFile">
+                    <span class="file-cta">
+                      <span class="file-icon">
+                        <i class="fas fa-upload"></i>
+                      </span>
+                      <span class="file-label">
+                        Choose Image
+                      </span>
+                    </span>
+                  </label>
+                </div>
+            </div>
+        </div>
+        
+          <button type="submit" class="button is-black">Add photo</button>
+         
+        
+        </form>
+        <a href="{% url 'add-video' property.id %}"><button class="button is-primary mt-2">Move on</button></a>
+</div>
+{% endblock %}

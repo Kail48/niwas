@@ -1,0 +1,77 @@
+{% extends 'welcomepage.html' %}
+{% load static %}
+{% block title %}{{profile.name|capfirst}} profile{% endblock%}
+{% block content %}
+<br>
+
+<div class="column is-full mt-5">
+      <div class="card mt-5 pl-5">
+            <div class="content">
+            <h3 class="title is-3 ">{{profile.name|upper}}</h3>
+            <div class="ui image label mb-4">
+                  <i class="mobile icon"></i>
+                  {{profile.phone_number}}
+                  <i class="edit icon ml-3 js-modal-trigger" data-target="modal-edit-number"></i>
+                  <div id="modal-edit-number" class="modal">
+                        <div class="modal-background"></div>
+                              <div class="modal-content">
+                                    <div class="box">
+                                    <p>Edit number</p>
+                                    <form action="" method="POST">
+                                          {% csrf_token %}
+                                          <div class="field mt-5 mb-5">
+                                                <label class="label">Phone number</label>
+                                                <div class="control has-icons-left has-icons-right">
+                                                <input class="input is-success" type="text" placeholder="Text input" name="number"  value="Ex: +9779812345678">
+                                                <span class="icon is-small is-left">
+                                                      <i class="fas fa-mobile"></i>
+                                                </span>
+                                                </div>
+                                          </div>
+                                          <button type="submit" class="button is-info mt-3 mb-5">Apply</button>
+                                    </form>
+                                    </div>
+                              </div>
+                              <button class="modal-close is-large" aria-label="close"></button>
+                      </div>
+                </div>
+              
+            </div>
+          </div>
+</div>
+<div class="column is-full mt-5">
+      <h4 class="title is-4 has-text-centered">My Bookmarks</h4>
+      <div class="ui divider"></div>
+      {% if isEmpty %}
+      <div class="column card-container-div">
+            <div class="content-div">
+                <h4 class="subtitle is-4">Oops!! <br>There is nothing to show!!</h4>
+                <a href="{% url 'properties-list' %}"><button class="button is-light">Go to Home</button></a>
+            </div>
+            <img class="success-image" src="{% static 'image/empty.jpeg' %}" height='600' width='400'>
+            
+        </div>
+        {% else %}
+        <div class="column list-wrapper-div">
+            <div class="column list-container-div is-three-fifths is-offset-one-fifth">
+                  <div class="ui items">
+                        {% for booking in bookings %}
+                        <div class="item">
+                          <a class="ui tiny image">
+                            <img src="{{booking.property.featured_image.url}}">
+                          </a>
+                          <div class="middle aligned content">
+                            <div class="header">
+                              <a class="header mt-2 mb-2" href="{% url 'show-property' booking.property.id %}">{{booking.property.title|truncatechars:25}}</a>
+                              <a href="{% url 'delete-booking' booking.id %}"><i class="trash icon mr-1"></i></a>
+                        </div>
+                          </div>
+                        </div>
+                        {% endfor %}
+                      </div>
+            </div>
+        </div>
+
+      {% endif %}
+</div>
+{% endblock %}
